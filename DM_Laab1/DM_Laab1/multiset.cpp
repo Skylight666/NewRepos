@@ -34,6 +34,17 @@ void multiSet::out()
 	cout << endl;
 }
 
+int multiSet::cardinalityMM()
+{
+	int sum = 0;
+	for (int i = 0; i < (*this).len; i++)
+	{
+		sum += (*this)[i];
+	}
+
+	return sum;
+}
+
 multiSet multiSet::unionMM(multiSet bag2)
 {
 	multiSet result((*this).weights, (*this).len);
@@ -54,4 +65,59 @@ multiSet multiSet::intersectionMM(multiSet bag2)
 	}
 
 	return result;
+}
+
+multiSet multiSet::complementationMM()
+{
+    multiSet result((*this).weights, (*this).len);
+    for (int i = 0; i < (*this).len; i++)
+    {
+        result[i] = (*this).weights[i] - (*this)[i];
+    }
+    
+    return result;
+}
+
+multiSet multiSet::differenceMM(multiSet bag2)
+{
+    multiSet result((*this).weights, (*this).len);
+    for (int i = 0; i < (*this).len; i++)
+    {
+        result[i] = ((*this)[i] < bag2[i]) ? 0 : (*this)[i] - bag2[i];
+    }
+   
+    return result;
+}
+
+multiSet multiSet::sumMM(multiSet bag2)
+{
+    multiSet result((*this).weights, (*this).len);
+    for (int i = 0; i < (*this).len; i++)
+    {
+        result[i] = ((*this)[i] + bag2[i] > (*this).weights[i]) ? (*this).weights[i] : (*this)[i] + bag2[i];
+    }
+  
+    return result;
+}
+
+multiSet multiSet::symmetricDifferenceMM(multiSet bag2)
+{
+    multiSet result((*this).weights, (*this).len);
+    for (int i = 0; i < (*this).len; i++)
+    {
+        result[i] = ((*this)[i] < bag2[i]) ? bag2[i] - (*this)[i] : (*this)[i] - bag2[i];
+    }
+    
+    return result;
+}
+
+multiSet multiSet::productMM(multiSet bag2)
+{
+    multiSet result((*this).weights, (*this).len);
+    for (int i = 0; i < (*this).len; i++)
+    {
+        result[i] = ((*this)[i] * bag2[i] > (*this).weights[i]) ? (*this).weights[i] : (*this)[i] * bag2[i];
+    }
+
+    return result;
 }
